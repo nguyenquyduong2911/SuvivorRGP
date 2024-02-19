@@ -12,6 +12,13 @@ public class MapController : MonoBehaviour
     Vector3 noTerrainPosition;
     PlayerMovement pm;
     public GameObject current;
+    [Header("Optimization")]
+    public List<GameObject> spawnedChunks;
+    GameObject lastesChunk;
+    public float maxOpDist;
+    float opDist;
+    float optimizerCooldown;
+    public float optimizationCooldownDur;
     void Start()
     {
       pm = FindObjectOfType<PlayerMovement>();  
@@ -21,6 +28,7 @@ public class MapController : MonoBehaviour
     void Update()
     {
         ChunkChecker(); 
+        ChunkOptimizer();
     }
     void ChunkChecker()
     {
@@ -106,6 +114,30 @@ public class MapController : MonoBehaviour
     void SpawnChunk()
     {
         int randomIndex = Random.Range(0, terrainChunks.Count);
-        GameObject terrain = Instantiate(terrainChunks[randomIndex], noTerrainPosition, Quaternion.identity);
+       lastesChunk =  Instantiate(terrainChunks[randomIndex], noTerrainPosition, Quaternion.identity);
+        spawnedChunks.Add(lastesChunk);
+    }
+    void ChunkOptimizer()
+    {
+        optimizerCooldown -= Time.deltaTime;
+        Debug.Log(optimizerCooldown);
+        if(optimizerCooldown <= 0)
+        {
+            optimizerCooldown = optimizationCooldownDur;
+        }
+        else { return;}
+        foreach (GameObject chunk in spawnedChunks)
+        {
+           opDist = Vector3.Distance(player.transform.position, chunk.transform.position);
+            if(opDist > maxOpDist)
+            {
+                chunk.SetActive(false);
+            }
+              else
+            {
+                chunk.SetActive(true);
+            }
+        }
+
     }
 }
