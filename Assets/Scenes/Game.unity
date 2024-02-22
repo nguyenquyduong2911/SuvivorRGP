@@ -162,6 +162,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   current: {fileID: 0}
+  spawnedChunks: []
+  maxOpDist: 50
+  optimizationCooldownDur: 1
 --- !u!4 &511402610
 Transform:
   m_ObjectHideFlags: 0
@@ -418,7 +421,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -495585300, guid: 0e6559b448757b544be6b0f91f10abd9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
